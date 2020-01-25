@@ -1,10 +1,8 @@
-import store from '~/store/index'
+import store from '@/store/index'
 
 export default (to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (!store.getters['auth/loggedIn']) {
+    if (!store.getters['auth/isLoggedIn']) {
       next({
         path: '/login',
         query: { redirect: to.fullPath }
@@ -13,6 +11,6 @@ export default (to, from, next) => {
       next()
     }
   } else {
-    next() // make sure to always call next()!
+    next()
   }
 }
