@@ -14,7 +14,7 @@ export default {
     user: null
   }),
   getters: {
-    isLoggedIn: ({ user }) => user,
+    isLoggedIn: ({ user }) => !!user,
     userRole: ({ user }) => user.role
   },
   mutations: {
@@ -27,7 +27,6 @@ export default {
       const { data } = await HttpClient.post('/auth/login', form)
 
       localStorage.setItem('access_token', data.token)
-
       dispatch('setUser', data.token)
     },
 

@@ -10,8 +10,9 @@
     >
       <template v-slot:listItem="{ listItem }">
         <span>{{ listItem.name }}</span>
+
         <button
-          v-if="userRole === 'admin'"
+          v-if="isAdmin"
           @click="onRemoveAnimalSubmit(listItem.id)"
         >
           x
@@ -20,7 +21,7 @@
     </BaseList>
 
     <AnimalForm
-      v-if="userRole === 'admin'"
+      v-if="isAdmin"
       @submit="onAddAnimalSubmit"
     />
   </article>
@@ -29,14 +30,13 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import BaseList from '@/components/BaseList'
-import AnimalForm from '@/components/AnimalForm'
 
 export default {
   name: 'Home',
 
   components: {
     BaseList,
-    AnimalForm
+    AnimalForm: () => import(/* webpackChunkName: "AnimalForm" */ '@/components/AnimalForm.vue')
   },
 
   computed: {
@@ -44,6 +44,10 @@ export default {
       animals: 'animals/animals',
       userRole: 'auth/userRole'
     }),
+
+    isAdmin () {
+      return this.userRole === 'admin'
+    },
 
     isLoading () {
       return this.animals === null

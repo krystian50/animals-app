@@ -18,7 +18,13 @@ export default new Vuex.Store({
         return
       }
 
-      store.dispatch('auth/setUser', token)
+      try {
+        store.dispatch('auth/setUser', token)
+      } catch (error) {
+        alert('Session expired. You are logout')
+
+        localStorage.removeItem('access_token')
+      }
     }
   ]
 })
