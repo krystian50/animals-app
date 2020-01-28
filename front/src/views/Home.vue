@@ -4,21 +4,12 @@
 
     <span v-if="isLoading">...is loading</span>
 
-    <BaseList
+    <AnimalList
       v-else
-      :list-items="animals"
-    >
-      <template v-slot:listItem="{ listItem }">
-        <span>{{ listItem.name }}</span>
-
-        <button
-          v-if="isAdmin"
-          @click="onRemoveAnimalSubmit(listItem.id)"
-        >
-          x
-        </button>
-      </template>
-    </BaseList>
+      :is-removable="isAdmin"
+      :animals="animals"
+      @remove="onRemoveAnimalSubmit"
+    />
 
     <AnimalForm
       v-if="isAdmin"
@@ -29,13 +20,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import BaseList from '@/components/BaseList'
+import AnimalList from '@/components/AnimalList'
 
 export default {
   name: 'Home',
 
   components: {
-    BaseList,
+    AnimalList,
     AnimalForm: () => import(/* webpackChunkName: "AnimalForm" */ '@/components/AnimalForm.vue')
   },
 
