@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import BaseForm from './BaseForm'
+import BaseForm from '@/components/BaseForm'
 
 export default {
   name: 'AnimalForm',
